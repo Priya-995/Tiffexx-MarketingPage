@@ -1,0 +1,653 @@
+/*
+ * TIFFEXX hero: embroidered background, character LEFT, typed copy + app card RIGHT.
+ * Import LAST. `section.story` gives it priority over the earlier `.story ...` blocks.
+ */
+ @import url('https://fonts.googleapis.com/css2?family=Yatra+One&family=Kalam:wght@400;700&display=swap');
+
+/* ---------- Background image ---------- */
+section.story .story-stage .story-bg {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  background: none !important;
+}
+section.story .story-bg-img {
+  position: absolute;
+  inset: 0;
+  background-color: #3f0b0b;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* hide the old cream glow / grain and any ghost outline-text pseudo layers */
+section.story .story-glow,
+section.story .story-grain {
+  display: none !important;
+}
+section.story .story-bg::before,
+section.story .story-bg::after,
+section.story .story-stage::before,
+section.story .story-stage::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* ---------- Left half: character ---------- */
+section.story .story-stage .story-thali-pos {
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: auto !important;
+  width: 50vw !important;
+  height: auto !important;
+  padding-top: 4rem !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: none !important;
+  z-index: 10 !important;
+  pointer-events: none !important;
+}
+
+section.story .story-stage .story-thali-wrap {
+  width: min(38vw, 62vh) !important;
+  max-width: 580px !important;
+  will-change: transform;
+}
+
+section.story .story-stage .story-thali {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+}
+
+/* ---------- Right half: typed copy ---------- */
+section.story .story-stage .tfx-copy {
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  left: auto !important;
+  right: 0 !important;
+  width: 50vw !important;
+  max-width: none !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 4rem 9vw 0 2vw !important; /* right padding keeps text clear of the corner artwork */
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  transform: none;
+  z-index: 3 !important;
+  pointer-events: none;
+}
+
+section.story .tfx-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(0.6rem, 1.6vh, 1.1rem);
+  width: 100%;
+  will-change: transform;
+}
+
+section.story .tfx-welcome {
+  margin: 0;
+  color: var(--yellow, #fbc017);
+  font-size: clamp(1rem, 1.6vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+section.story .tfx-title {
+  margin-right: 200px;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size: clamp(3rem, 7.4vw, 9rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--cream, #fff1dc);
+}
+
+section.story .tfx-line {
+  display: block;
+  white-space: nowrap;
+}
+
+section.story .tfx-about {
+  margin: 0;
+  max-width: 34em;
+  color: rgba(255, 241, 220, 0.85);
+  font-size: clamp(0.95rem, 1.2vw, 1.2rem);
+  line-height: 1.6;
+}
+
+/* words never break mid-word; letters sit inline */
+section.story .tfx-w {
+  display: inline-block;
+  white-space: nowrap;
+}
+section.story .tfx-ch {
+  position: relative;
+  display: inline-block;
+}
+
+/* caret follows the latest typed letter */
+section.story .tfx-ch.is-cur::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 8%;
+  bottom: 4%;
+  width: 0.08em;
+  min-width: 2px;
+  margin-left: 0.04em;
+  background: var(--yellow, #fbc017);
+  animation: tfx-caret 0.8s steps(1) infinite;
+}
+
+@keyframes tfx-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ---------- Download card ---------- */
+section.story .tfx-dl {
+  margin-top: clamp(0.4rem, 1.6vh, 1.2rem);
+  padding: 0.9rem 1.1rem 1.05rem;
+  border: 1px solid rgba(251, 192, 23, 0.45);
+  border-radius: 16px;
+  background: rgba(30, 6, 6, 0.55);
+  backdrop-filter: blur(6px);
+  pointer-events: auto;
+}
+
+section.story .tfx-dl-title {
+  margin: 0 0 0.6rem;
+  color: var(--cream, #fff1dc);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+section.story .tfx-dl-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+section.story .tfx-dl-btn {
+  display: flex;
+  flex-direction: column;
+  min-width: 8.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  background: var(--yellow, #fbc017);
+  color: #3a0b08;
+  text-decoration: none;
+  line-height: 1.15;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+section.story .tfx-dl-btn small {
+  font-size: 0.65rem;
+  font-weight: 600;
+  opacity: 0.8;
+}
+section.story .tfx-dl-btn strong {
+  font-size: 1rem;
+  font-weight: 800;
+}
+section.story .tfx-dl-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- After the hero: "What's inside" copy LEFT, thali RIGHT ---------- */
+@media (min-width: 821px) {
+  section.story .story-stage .inside-copy {
+    left: 0 !important;
+    right: auto !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    max-width: 46vw !important;
+    padding-left: 6vw !important;
+  }
+}
+
+/* ---------- Mobile: character on top, copy underneath ---------- */
+@media (max-width: 820px) {
+  section.story .story-stage .story-thali-pos {
+    width: 100% !important;
+    bottom: auto !important;
+    height: 40% !important;
+  }
+  section.story .story-stage .story-thali-wrap {
+    width: min(48vw, 30vh) !important;
+  }
+  section.story .story-stage .tfx-copy {
+    top: 40%;
+    width: 100%;
+    padding: 0 6vw;
+    align-items: flex-start;
+  }
+  section.story .tfx-title {
+    font-size: 11vw;
+  }
+  section.story .tfx-about {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  section.story .tfx-ch.is-cur::after {
+    animation: none;
+  }
+}
+/* =========================================================
+   HERO FINAL OVERRIDES: tight two-column layout, no overflow
+   ========================================================= */
+
+/* character column: left, a bit narrower so the gap shrinks */
+section.story .story-stage .story-thali-pos {
+  width: 48vw !important;
+  justify-content: flex-end !important;      /* push the character toward the text */
+  padding-right: 1vw !important;
+}
+section.story .story-stage .story-thali-wrap {
+  width: min(44vw, 76vh) !important;
+  max-width: 720px !important;
+}
+
+/* text column: starts right where the character ends, centred inside */
+section.story .story-stage .tfx-copy {
+  left: 48vw !important;
+  right: 0 !important;
+  width: 52vw !important;
+  padding: 4rem 5vw 0 1vw !important;
+  justify-content: center !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+}
+
+section.story .story-stage .tfx-stack {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  align-items: center !important;
+  text-align: center !important;
+  gap: clamp(1rem, 2.4vh, 1.8rem) !important;
+}
+
+/* headline: sized to the column, wraps instead of overflowing */
+section.story .story-stage .tfx-title {
+  font-family: 'Yatra One', 'Kalam', Georgia, serif !important;
+  font-weight: 400 !important;
+  font-size: clamp(2rem, 3.7vw, 4.8rem) !important;
+  line-height: 1.15 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+  max-width: 100% !important;
+  color: var(--cream, #fff1dc);
+  text-shadow:
+    0 3px 0 rgba(60, 10, 6, 0.55),
+    0 14px 34px rgba(0, 0, 0, 0.5),
+    0 0 46px rgba(251, 192, 23, 0.2);
+}
+section.story .story-stage .tfx-line {
+  display: block !important;
+  white-space: normal !important;            /* was nowrap: this caused the overflow */
+}
+section.story .story-stage .tfx-line:nth-child(2) {
+  color: var(--yellow, #fbc017);
+}
+
+/* badges: images only, no box, soft shadow */
+section.story .story-stage .tfx-dl {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: none !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  pointer-events: auto;
+}
+section.story .story-stage .tfx-dl-btns {
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px !important;
+  pointer-events: auto;
+}
+section.story .story-stage .tfx-dl-btn {
+  display: inline-block !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: none !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  line-height: 0 !important;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+section.story .story-stage .tfx-dl-btn img {
+  display: block;
+  height: 54px;
+  width: auto;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.5));
+  transition: filter 0.35s ease;
+}
+section.story .story-stage .tfx-dl-btn:hover {
+  transform: translateY(-5px) scale(1.04);
+}
+section.story .story-stage .tfx-dl-btn:hover img {
+  filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.6))
+          drop-shadow(0 0 16px rgba(251, 192, 23, 0.35));
+}
+
+/* tablets / small laptops */
+@media (max-width: 1100px) {
+  section.story .story-stage .tfx-title { font-size: clamp(1.8rem, 4vw, 3rem) !important; }
+  section.story .story-stage .tfx-dl-btn img { height: 46px; }
+}
+
+/* mobile: character on top, text below, all centred */
+@media (max-width: 820px) {
+  section.story .story-stage .story-thali-pos {
+    width: 100% !important;
+    justify-content: center !important;
+    padding-right: 0 !important;
+  }
+  section.story .story-stage .story-thali-wrap {
+    width: min(62vw, 36vh) !important;
+  }
+  section.story .story-stage .tfx-copy {
+    left: 0 !important;
+    top: 40% !important;
+    width: 100% !important;
+    padding: 0 6vw !important;
+  }
+  section.story .story-stage .tfx-title { font-size: 8.5vw !important; }
+  section.story .story-stage .tfx-dl-btn img { height: 42px; }
+}
+/* =========================================================
+   HERO: bigger headline, 2 clean lines, everything centred
+   ========================================================= */
+
+/* the stack becomes a size container: font sizes below are relative to its width */
+section.story .story-stage .tfx-stack {
+  container-type: inline-size;
+  width: 100% !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+section.story .story-stage .tfx-title {
+  width: 100% !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+  /* "Home-Cooked Comfort." (20 chars) fills ~96% of the column */
+  font-size: min(8cqw, 5rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+}
+
+/* line 1 = Home-Cooked Comfort.   line 2 = On Repeat. */
+section.story .story-stage .tfx-line {
+  display: block !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+}
+section.story .story-stage .tfx-line + .tfx-line {
+  margin-top: 0.08em;
+}
+
+/* CTAs: centred under the headline */
+section.story .story-stage .tfx-dl {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  margin: clamp(0.8rem, 2.4vh, 1.8rem) 0 0 !important;
+}
+section.story .story-stage .tfx-dl-btns {
+  width: 100% !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 16px !important;
+  margin: 0 auto !important;
+}
+section.story .story-stage .tfx-dl-btn img {
+  height: clamp(46px, 5.6cqw, 62px);
+}
+/* =========================================================
+   HERO: centred block, left-aligned content, bigger CTAs
+   ========================================================= */
+
+/* the old size-container made the block shrink-proof, so switch it off */
+section.story .story-stage .tfx-stack {
+  container-type: normal !important;
+  width: fit-content !important;      /* block is only as wide as the headline */
+  max-width: 100% !important;
+  margin: 0 auto !important;          /* ...and sits in the middle of the right half */
+  align-items: flex-start !important; /* everything inside is left-aligned */
+  text-align: left !important;
+}
+
+/* right half: centred both ways, nudged up to line up with the character */
+section.story .story-stage .tfx-copy {
+  padding: 4rem 3vw 2rem 3vw !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* headline: both lines start at the same left edge */
+section.story .story-stage .tfx-title {
+  width: auto !important;
+  margin: 0 !important;
+  text-align: left !important;
+  font-size: clamp(2rem, 4vw, 4.5rem) !important;
+  line-height: 1.2 !important;
+}
+section.story .story-stage .tfx-line {
+  display: block !important;
+  white-space: nowrap !important;
+  text-align: left !important;
+}
+
+/* CTAs: bigger, left edge aligned with the headline */
+section.story .story-stage .tfx-dl {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  margin: clamp(1.2rem, 3vh, 2.4rem) 0 0 !important;
+}
+section.story .story-stage .tfx-dl-btns {
+  width: auto !important;
+  justify-content: flex-start !important;
+  gap: 20px !important;
+  margin: 0 !important;
+}
+section.story .story-stage .tfx-dl-btn img {
+  height: clamp(60px, 4.6vw, 92px) !important;
+  width: auto;
+}
+
+@media (max-width: 1100px) {
+  section.story .story-stage .tfx-title { font-size: clamp(1.8rem, 4.4vw, 3.2rem) !important; }
+  section.story .story-stage .tfx-dl-btn img { height: clamp(48px, 5vw, 64px) !important; }
+}
+
+@media (max-width: 820px) {
+  section.story .story-stage .tfx-stack { margin: 0 auto !important; }
+  section.story .story-stage .tfx-title { font-size: 8vw !important; }
+  section.story .story-stage .tfx-dl-btn img { height: 46px !important; }
+}
+/* "On Repeat." bigger than "Home-Cooked Comfort." */
+section.story .story-stage .tfx-line:nth-child(2) {
+  font-size: 1.35em !important;   /* 1.35 × the headline size */
+  line-height: 1.1 !important;
+  margin-top: 0.04em !important;
+  letter-spacing: 0.01em;
+  text-shadow:
+    0 3px 0 rgba(60, 10, 6, 0.55),
+    0 14px 34px rgba(0, 0, 0, 0.5),
+    0 0 50px rgba(251, 192, 23, 0.35);
+}
+/* =========================================================
+   Font swap + subheadline + character glow/shadow
+   ========================================================= */
+
+/* headline: Baloo 2, homely and rounded */
+section.story .story-stage .tfx-title {
+  font-family: 'Baloo 2', 'Fredoka', system-ui, sans-serif !important;
+  font-weight: 800 !important;
+  font-size: clamp(2.5rem, 4.9vw, 7rem) !important;
+  line-height: 1.05 !important;
+  letter-spacing: 0 !important;
+}
+section.story .story-stage .tfx-line:nth-child(2) {
+  font-size: 1.22em !important;
+  line-height: 1 !important;
+}
+
+/* subheadline */
+section.story .story-stage .tfx-sub {
+  margin: 0;
+  font-weight: 500;
+  font-size: clamp(1.1rem, 1.75vw, 1.9rem);
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  color: rgba(255, 241, 220, 0.92);
+  text-align: left;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------- Character: warm glow behind, soft shadow, floor shadow ---------- */
+section.story .story-stage .story-thali-wrap {
+  position: relative;
+}
+
+/* radial gradient halo behind the character */
+section.story .story-stage .story-thali-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -12% -14% -6% -14%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side, rgba(255, 170, 40, 0.34), rgba(214, 67, 27, 0.18) 55%, transparent 100%);
+  filter: blur(14px);
+}
+
+/* soft floor shadow under the feet */
+section.story .story-stage .story-thali-wrap::after {
+  content: '';
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: -3%;
+  height: 7%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), transparent 100%);
+  filter: blur(8px);
+}
+
+/* keep the character itself above both layers, with depth + a faint warm rim */
+section.story .story-stage .story-orbit {
+  position: relative;
+  z-index: 1;
+}
+section.story .story-stage .story-thali {
+  filter:
+    drop-shadow(0 28px 34px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 38px rgba(255, 170, 40, 0.22));
+}
+
+@media (max-width: 820px) {
+  section.story .story-stage .tfx-sub { font-size: 1.05rem; }
+  section.story .story-stage .tfx-title { font-size: 9vw !important; }
+}
+/* =========================================================
+   Desktop: text column closer to the character, headline fits
+   ========================================================= */
+@media (min-width: 821px) {
+  /* text column starts right after the character, with a small gap */
+  section.story .story-stage .tfx-copy {
+    left: 45vw !important;
+    right: 0 !important;
+    width: 55vw !important;
+    padding: 4rem 3.5vw 2rem 2vw !important;   /* 2vw = gap from the character */
+    justify-content: flex-start !important;
+    align-items: center !important;
+  }
+
+  section.story .story-stage .tfx-stack {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+
+  /* headline sized so "Home-Cooked Comfort." always fits the column */
+  section.story .story-stage .tfx-title {
+    font-size: clamp(2rem, 4.2vw, 6rem) !important;
+    max-width: 100% !important;
+  }
+  section.story .story-stage .tfx-line {
+    white-space: nowrap !important;
+  }
+}
+
+/* tablets / small laptops */
+@media (min-width: 821px) and (max-width: 1100px) {
+  section.story .story-stage .tfx-title {
+    font-size: clamp(1.8rem, 4.1vw, 3.2rem) !important;
+  }
+}
+section.story .story-stage .tfx-line {
+  font-family: var(--f-display);
+}
+.tfx-sub{
+  font-family: var(--f-display);
+  
+}
+.sub-ticket {
+  position: absolute; left: 50%; bottom: 8vh; width: min(290px, 22vw);
+  transform: translateX(-50%) rotate(3deg);
+  background: #fff; color: #4f120c;
+  padding: 1.4rem 1.2rem 1rem;
+  box-shadow: 0 20px 50px rgba(0,0,0,.45);
+  z-index: 3; opacity: 0; visibility: hidden; /* GSAP reveals it */
+}
+.sub-ticket-clip {
+  position: absolute; top: -24px; left: 50%; width: 66px; height: 32px;
+  transform: translateX(-50%); background: #2b2b2b; border-radius: 6px;
+}
+.sub-ticket-head { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: .8rem; }
+.sub-ticket-badge { background: #9a8a86; color: #fff; padding: .2rem .7rem; border-radius: 999px; transition: background .3s, color .3s; }
+.sub-ticket-badge.on { background: #4f120c; color: #ffcb10; }
+.sub-ticket h4 { margin: .8rem 0 .6rem; font-size: 1.5rem; text-transform: uppercase; }
+.sub-ticket ul { list-style: none; margin: 0; padding: 0; }
+.sub-ticket li { display: flex; justify-content: space-between; padding: .45rem 0; border-bottom: 1px dotted #aaa; font-size: .9rem; opacity: .55; transition: opacity .3s; }
+.sub-ticket li.done { opacity: 1; }
+.sub-ticket-total { display: flex; justify-content: space-between; align-items: center; margin: .9rem 0 .6rem; }
+.sub-ticket-tag { border: 2px solid currentColor; padding: .1rem .5rem; font-size: .75rem; border-radius: 4px; }
+.sub-ticket-total strong { font-size: 1.4rem; text-transform: uppercase; }
+.sub-ticket-barcode {
+  height: 42px;
+  background: repeating-linear-gradient(90deg, #4f120c 0 2px, transparent 2px 4px, #4f120c 4px 5px, transparent 5px 8px);
+}
+.sub-ticket small { display: block; text-align: center; margin-top: .4rem; font-weight: 600; }
+
+@media (max-width: 820px) { .sub-ticket { display: none; } }
