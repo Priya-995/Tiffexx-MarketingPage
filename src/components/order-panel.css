@@ -1,0 +1,192 @@
+/* "Get the app" section.
+   - Yellow section background is untouched; it fills exactly one screen.
+   - A maroon card sits on it, aligned to the same .container edges as the navbar.
+   - The card has the SAME gap to the screen edge / navbar on all four sides (--gap).
+   - The phone lives INSIDE the card and rises from its bottom edge (card clips it), like the reference. */
+
+section.order#order {
+  --gap: clamp(14px, 2.2vw, 32px);       /* equal space around the card on all four sides */
+  --card-pad: clamp(28px, 4vw, 72px);  /* equal inner space inside the card (left / top) */
+  --nav-h: 0px;                          /* set to your navbar height if it is fixed/overlaying (e.g. 72px) */
+  --phone-sink: 0%;                      /* measured from Mockup.png by Order.jsx so the phone's real bottom edge meets the card edge */
+  --phone-vis: 1.3;                      /* height / width of the visible phone, also measured by Order.jsx */
+
+  /* two-column layout: the phone column and the text column are derived from the same variables */
+  --phone-w: clamp(260px, min(30vw, 58vh), 560px);   /* phone width */
+  --phone-right: clamp(48px, 7vw, 120px);            /* space between phone and card's right edge */
+  --col-gap: clamp(32px, 4vw, 72px);                 /* space between text and phone */
+
+  --maroon: #4a1109;
+  --cream: #fff3d9;
+  --yellow: #ffc914;
+
+  min-height: 100vh !important;
+  min-height: 100svh !important;
+  height: auto !important;
+  padding: calc(var(--nav-h) + var(--gap)) 0 var(--gap) !important;
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+}
+
+/* same horizontal edges as the navbar (.container); the side gap is already the container's own padding,
+   so the card's left/right space matches the navbar content edges */
+section.order#order .order-wrap {
+  display: flex;
+  width: 100%;
+  padding-block: 0;
+}
+
+.order-panel {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  display: grid;
+  /* col 1 = exactly as wide as the text/CTAs; col 2 = all remaining space, phone centred in it
+     => equal gap between the content and the phone, and between the phone and the card's right edge */
+  grid-template-columns: minmax(0, max-content) minmax(calc(var(--phone-w) + 2 * var(--col-gap)), 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  overflow: hidden; /* clips the phone at the card's rounded bottom edge */
+  box-sizing: border-box;
+  padding: var(--card-pad) 0 0 var(--card-pad); /* no right/bottom padding: the phone column runs to the card's right and bottom edges */
+  border-radius: clamp(22px, 2.6vw, 40px);
+  background:
+    radial-gradient(120% 90% at 85% 15%, rgba(255, 201, 20, 0.14), transparent 55%),
+    var(--maroon);
+  box-shadow: 0 24px 50px -22px rgba(74, 17, 9, 0.55);
+}
+
+.order-panel .order-grid {
+  display: contents; /* copy and visual become direct grid items of the panel */
+}
+
+/* ---------- Left: copy ---------- */
+.order-panel .order-copy {
+  grid-column: 1;
+  align-self: center;
+  margin-bottom: var(--card-pad); /* keeps the text vertically centred although the panel has no bottom padding */
+  min-width: 0;
+}
+
+.order-panel .order-copy .display,
+.order-panel .order-copy .display * {
+  color: var(--cream);
+  font-size: clamp(2.4rem, min(5.2vw, 11vh), 6.5rem);
+  line-height: 0.98;
+}
+
+.order-panel .order-copy .display em,
+.order-panel .order-copy .display em * {
+  color: var(--yellow);
+}
+
+.order-panel .order-lede {
+  color: rgba(255, 243, 217, 0.85);
+  font-size: clamp(1.05rem, min(1.55vw, 3.2vh), 1.75rem);
+  line-height: 1.55;
+  max-width: 46ch;
+  margin-top: clamp(14px, 2.4vh, 28px);
+}
+
+.order-panel .order-get {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: clamp(14px, 1.8vw, 28px);
+  margin-top: clamp(24px, 5vh, 52px);
+}
+
+.order-panel .order-stores {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.order-panel .order-store img {
+  height: clamp(52px, min(5vw, 9vh), 84px);
+  width: auto;
+}
+
+.order-panel .order-qr {
+  display: flex;
+  align-items: center;
+  align-self: stretch;          /* same height as the stacked store badges */
+  gap: clamp(14px, 1.6vw, 24px);
+  padding: 14px clamp(22px, 2.4vw, 36px) 14px 14px; /* even breathing room around QR and text */
+  border-radius: 22px;
+  width: fit-content;
+  max-width: fit-content;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.35);
+}
+
+.order-panel .order-qr p {
+  margin: 0;
+  width: auto;
+  flex: 0 0 auto;
+}
+
+.order-panel .order-qr img {
+  width: clamp(112px, min(10.5vw, 19vh), 170px);
+  aspect-ratio: 1 / 0.93;       /* trims the grey strip that sits under the QR in the source image */
+  height: auto;
+  object-fit: cover;
+  object-position: top center;
+  flex: 0 0 auto;
+}
+
+.order-panel .order-qr strong {
+  font-size: clamp(1.1rem, 1.6vw, 1.7rem);
+}
+
+.order-panel .order-qr span {
+  font-size: clamp(0.9rem, 1.25vw, 1.3rem);
+}
+
+/* ---------- Right: phone rising from the card's bottom edge ---------- */
+.order-panel .order-visual {
+  grid-column: 2;
+  align-self: end;          /* sits on the card's bottom edge and bleeds off it (clipped by the card) */
+  justify-self: center;     /* equal space to the content on the left and the card edge on the right */
+  /* as wide as --phone-w, but never so tall that the visible phone would touch the card's top padding */
+  width: min(var(--phone-w), calc((100svh - var(--nav-h) - 2 * var(--gap) - var(--card-pad)) / var(--phone-vis)));
+  min-height: 0;
+  margin: 0;
+}
+
+.order-panel .order-phone,
+.order-panel .order-phone-float {
+  display: block;
+  line-height: 0;
+}
+
+.order-panel .order-phone img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  transform: translateY(var(--phone-sink));
+}
+
+/* ---------- Small screens: stack, phone at the bottom ---------- */
+@media (max-width: 760px) {
+  .order-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--card-pad) var(--card-pad) 0;
+  }
+  .order-panel .order-copy {
+    max-width: none;
+    padding-bottom: 24px;
+  }
+  .order-panel .order-visual {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: min(80%, 360px);
+    margin: 0 auto;
+    overflow: hidden;
+  }
+}
